@@ -1,99 +1,76 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+# Train Scraper
+Train Scraper is a NestJS-based application that periodically scrapes train ticket data from the Trenitalia API and sends customized notifications to users about available trains based on their preferences. The application allows users to define dates, train categories, and other configurations through environment variables.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
 
-## Description
+## Features
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- **Automated Train Scraping:** Runs a scheduled job to check for available trains based on predefined dates and filters.
+- **Configurable Settings:** Dates, train categories, email recipients, and other settings are configurable via environment variables.
+- **Email Notifications:** Sends emails to notify users about available train tickets, including details like departure/arrival times, prices, CO₂ emissions, and service details.
+- **HTML Email Templates:** Uses structured and styled HTML templates for clear and informative email notifications.
 
-## Project setup
+## Technologies Used
+- **NestJS:** Framework for creating a modular and scalable server-side application.
+- **Nodemailer:** Library for sending emails.
+- **@nestjs/schedule:** For scheduling jobs.
+- **Trenitalia API:** For fetching train data.
+- **TypeScript:** For static typing and advanced development tools.
+## Installation
+
+- Copy the repository:
 
 ```bash
-$ npm install
+  git clone https://github.com/AndreaCasaluci/train-scraper
+  cd train-scraper
 ```
-
-## Compile and run the project
+- Install dependencies:
 
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+  npm install
 ```
-
-## Run tests
+- Set up environment variables: Copy .env.example to .env and configure it with the necessary credentials and settings.
 
 ```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+  cp .env.example .env
 ```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+- Run the application:
 
 ```bash
-$ npm install -g mau
-$ mau deploy
+  npm run start
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
 
-## Resources
+## Configuration
+The following environment variables should be set in the .env file to configure the application:
 
-Check out a few resources that may come in handy when working with NestJS:
+- Dates to Check: `DATES_TO_CHECK` — A comma-separated list of dates (in YYYY-MM-DD format) for which to check train availability.
+- Train Categories: `TRAIN_CATEGORIES` — A comma-separated list of train categories to filter by (e.g., Frecciarossa, Intercity).
+- Denominations: `DENOMINATIONS` — A comma-separated list of train denominations to filter by.
+- Email Recipients: `EMAIL_RECIPIENTS` — A comma-separated list of email addresses to notify.
+- Email User: `EMAIL_USER` — Email address to send notifications from.
+- Email Password: `EMAIL_PASS` — Password for the email account.
+- Departure Location ID: `DEPARTURE_LOCATION_ID` - Trenitalia Location ID (Planning on writing a dictionary to translate those)
+- Arrival Location ID: `ARRIVAL_LOCATION_ID` - Trenitalia Location ID (Planning on writing a dictionary to translate those)
+  Example `.env` configuration:
+```bash
+  DATES_TO_CHECK=2024-11-15,2024-11-16
+  TRAIN_CATEGORIES=Frecciarossa,Intercity
+  DENOMINATIONS=Premium,Business
+  EMAIL_RECIPIENTS=user1@example.com,user2@example.com
+  EMAIL_USER=trainscraper@gmail.com
+  EMAIL_PASS=yourpassword
+  DEPARTURE_LOCATION_ID=830000219
+  ARRIVAL_LOCATION_ID=830011145
+```
+## Usage
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+1. **Run the Job Service:** The `TrainJobService` is scheduled to run at a defined interval. By default, it uses `CronExpression.EVERY_2_HOURS` for demonstration purposes. Adjust this in `handleTrainJob` as needed.
 
-## Support
+2. **Email Notifications:** Each time the job runs, it checks for available trains matching the criteria and sends emails to the recipients defined in `EMAIL_RECIPIENTS`.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+This project is licensed under the [MIT](https://choosealicense.com/licenses/mit/) License.
+
