@@ -19,7 +19,7 @@ export class TrainJobService {
         @Inject('IMailService') private readonly mailService: IMailService
     ) {}
 
-    @Cron(CronExpression.EVERY_10_SECONDS)
+    @Cron(CronExpression.EVERY_HOUR)
     async handleTrainJob() {
         this.logger.log('Train job started.');
 
