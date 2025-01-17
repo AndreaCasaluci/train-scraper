@@ -2,6 +2,9 @@
 # Train Scraper
 Train Scraper is a NestJS-based application that periodically scrapes train ticket data from the Trenitalia API and sends customized notifications to users about available trains based on their preferences. The application allows users to define dates, train categories, and other configurations through environment variables.
 
+## Purpose
+As an out-of-town college student, I face the same challenge as many others during the holiday season, whether it's Christmas or Easter. It's like being a lion chasing a gazelle—I'm constantly refreshing the Trenitalia website, trying to be faster than the other students in order to snag tickets at a reasonable price before they’re sold out. It becomes a race, checking every 30 minutes to secure my journey home to my family, knowing that if I don’t act quickly, someone else will beat me to it.
+
 
 ## Features
 
