@@ -55,7 +55,8 @@ The following environment variables should be set in the .env file to configure 
 - Email Password: `EMAIL_PASS` — Password for the email account.
 - Departure Location ID: `DEPARTURE_LOCATION_ID` - Trenitalia Location ID (Planning on writing a dictionary to translate those)
 - Arrival Location ID: `ARRIVAL_LOCATION_ID` - Trenitalia Location ID (Planning on writing a dictionary to translate those)
-  Example `.env` configuration:
+
+Example `.env` configuration:
 ```bash
   DATES_TO_CHECK=2024-11-15,2024-11-16
   TRAIN_CATEGORIES=Frecciarossa,Intercity
